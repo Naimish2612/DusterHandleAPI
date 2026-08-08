@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DUSTER.EComm.API/DUSTER.EComm.API.csproj" />
+  <Project Path="DUSTER.EComm.Data/DUSTER.EComm.Data.csproj" />
+  <Project Path="DUSTER.EComm.Services/DUSTER.EComm.Services.csproj" />
+</Solution>

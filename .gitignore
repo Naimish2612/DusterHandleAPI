@@ -1,0 +1,33 @@
+﻿# =========================
+# .NET Build Folders
+# =========================
+**/bin/
+**/obj/
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+/DUSTER.EComm.API/Properties/PublishProfiles
+/DUSTER.EComm.API/dotnet-tools.json
+/DUSTER.EComm.API/appsettings.json
+/DUSTER.EComm.API/appsettings.Development.json
+/DUSTER.EComm.API/wwwroot/temp/imports/raw
+/DUSTER.EComm.API/wwwroot/temp/imports/errors
+/DUSTER.EComm.API/Files/Import
+/DUSTER.EComm.API/nlog.config
