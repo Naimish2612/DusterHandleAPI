@@ -47,8 +47,8 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 if (model == null || !model.ContainsKey("data"))
                     return ResponseEntity<object>.Error(null, "Form data is missing or invalid.");
 
-                if (model.Files.Count < 3)
-                    return ResponseEntity<object>.Error(null, "At least 3 images are required.");
+                if (model.Files.Count < 1)
+                    return ResponseEntity<object>.Error(null, "At least 1 image is required.");
 
                 var data = model["data"].ToString();
 
