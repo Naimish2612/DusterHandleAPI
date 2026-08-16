@@ -11,7 +11,7 @@
         {
             try
             {
-                return ResponseEntity<object>.Success(new { message = "Welcome to EIPL E-Commerce API" });
+                return ResponseEntity<object>.Success(new { message = "Welcome to Duster E-Commerce API" });
             }
             catch (Exception ex)
             {

@@ -23,7 +23,7 @@ namespace DUSTER.EComm.API.Modules.Welcome
              
             var response = new
             {
-                application = "EIPL E-Commerce",
+                application = "Duster E-Commerce",
                 version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
                 environment = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")) ? "Production" : Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
                 server_UTC_time = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
