@@ -109,6 +109,7 @@ builder.Services.AddHostedService<ImportBackgroundWorker>();
 //Register the specific import handlers
 builder.Services.AddScoped<IImportHandler, ProductCategoryImportHandler>();
 builder.Services.AddScoped<IImportHandler, ProductSubCategoryImportHandler>();
+builder.Services.AddScoped<IImportHandler, ProductImportHandler>();
 
 #endregion
 
