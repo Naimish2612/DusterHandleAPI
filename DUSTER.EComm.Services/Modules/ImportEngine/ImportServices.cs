@@ -95,7 +95,7 @@ namespace DUSTER.EComm.Services.Modules.ImportEngine
 
                 if (_currentUserService.User.user_type.ToLower() != "admin")
                 {
-                    sqlQuery += $" AND created_by ='{user_code}' LIMIT 100 ";
+                    sqlQuery += $" AND created_by ='{user_code}' ";
                 }
 
                 sqlQuery += " ORDER BY created_at DESC LIMIT 100 ";
