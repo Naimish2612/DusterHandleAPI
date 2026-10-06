@@ -1,4 +1,4 @@
-﻿using DUSTER.EComm.Data.Helpers.CacheMemory;
+using DUSTER.EComm.Data.Helpers.CacheMemory;
 using DUSTER.EComm.Data.Helpers.Strings;
 using DUSTER.EComm.Services.Modules.Catelog;
 using DUSTER.EComm.Services.Modules.Catelog.Models;

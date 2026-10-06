@@ -463,13 +463,11 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 // Optional: Add default sorting
                 sql.Append(" ORDER BY product_code DESC");
 
-
-                var productListData = await _productRepository.QueryDynamicAsync(sql.ToString(), parameters);
-                //var productListData = await _productRepository.QueryPagedAsync<dynamic>(sql.ToString(), dto, parameters);
+                var productListData = await _productRepository.QueryPagedAsync<dynamic>(sql.ToString(), dto, parameters);
 
                 // 4. Map back to ProductMaster list
                 var products = new List<ProductMasterDto>();
-                foreach (var row in productListData)
+                foreach (var row in productListData.Data)
                 {
                     var param = new DynamicParameters();
                     param.Add("@product_code", row.product_code);
@@ -523,14 +521,14 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                         estimated_delivery_days = row.estimated_delivery_days == null ? 0 : row.estimated_delivery_days
                     });
                 }
-                //var finalResult = new PaginatedResult<ProductMasterDto>
-                //{
-                //    Data = products,
-                //    Metadata = productListData.Metadata
-                //};
+                var finalResult = new PaginatedResult<ProductMasterDto>
+                {
+                    Data = products,
+                    Metadata = productListData.Metadata
+                };
 
                 if (products.Count > 0)
-                    return ResponseEntity<object>.Success(products, "Products retrieved successfully.");
+                    return ResponseEntity<object>.Success(finalResult, "Products retrieved successfully.");
                 else
                     return ResponseEntity<object>.Error(null, "No products found matching the criteria.");
             }
