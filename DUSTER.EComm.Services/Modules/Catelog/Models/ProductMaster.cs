@@ -1,4 +1,4 @@
-﻿using DUSTER.EComm.Data.Helpers.Pagination;
+using DUSTER.EComm.Data.Helpers.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,6 +32,8 @@ namespace DUSTER.EComm.Services.Modules.Catelog.Models
 
         public decimal actual_price { get; set; }
 
+        public decimal? discount_percentage { get; set; } = 0;
+
         public string? sap_sku_code { get; set; }
 
     }
@@ -44,6 +46,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog.Models
             RuleFor(x => x.sku).NotEmpty().WithMessage("SKU is required.");
             RuleFor(x => x.base_price).GreaterThan(0).WithMessage("Base price must be greater than zero.");
             RuleFor(x => x.actual_price).GreaterThanOrEqualTo(x => x.base_price).WithMessage("Actual price should be greater than or equal to Base price");
+            RuleFor(x => x.discount_percentage).InclusiveBetween(0, 100).WithMessage("Discount percentage must be between 0 and 100.").When(x => x.discount_percentage.HasValue);
             RuleFor(x => x.category_id).GreaterThan(0).WithMessage("Category must be greater than zero.");
             RuleFor(x => x.sub_category_id).GreaterThan(0).WithMessage("Sub Category must be greater than zero.");
             RuleFor(x => x.manufacturer_id).GreaterThan(0).WithMessage("Manufacturer must be greater than zero.");
@@ -90,6 +93,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog.Models
         public string? tax_class_name { get; set; }
         public int estimated_delivery_days { get; set; }
         public decimal actual_price { get; set; }
+        public decimal? discount_percentage { get; set; }
         public string? sap_sku_code { get; set; }
 
     }

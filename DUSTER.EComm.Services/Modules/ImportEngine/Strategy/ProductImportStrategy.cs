@@ -70,6 +70,12 @@ namespace DUSTER.EComm.Services.Modules.ImportEngine.Strategy
                 actualPrice = basePrice;
             }
 
+            decimal discountPercentage = ParseDecimal(GetValue(row, "Discount Percentage", "DiscountPercentage", "Discount", "Discount %"), 0);
+            if (discountPercentage <= 0 && actualPrice > basePrice && actualPrice > 0)
+            {
+                discountPercentage = Math.Round(((actualPrice - basePrice) / actualPrice) * 100, 2);
+            }
+
             int stockQuantity = ParseInt(GetValue(row, "Stock Quantity", "StockQuantity", "Quantity"), 0);
             bool inStock = ParseBoolean(GetValue(row, "In Stock", "InStock"), defaultValue: stockQuantity > 0);
             bool isActive = ParseBoolean(GetValue(row, "Is Active", "IsActive"), defaultValue: true);
@@ -104,6 +110,7 @@ namespace DUSTER.EComm.Services.Modules.ImportEngine.Strategy
                 description = GetValue(row, "Description", "Desc"),
                 base_price = basePrice,
                 actual_price = actualPrice,
+                discount_percentage = discountPercentage,
                 category_id = categoryId,
                 sub_category_id = subCategoryId,
                 manufacturer_id = manufacturerId,

@@ -222,7 +222,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 string sql = @"SELECT 
                                 product_code, p.name, sku, p.slug, p.description, base_price, p.category_id,pc.name as category_name, 
                                 p.sub_category_id,psc.name as sub_category_name, p.manufacturer_id,m.name as manufacturer_name, p.is_active, in_stock, stock_quantity,
-                                attributes::text as attributes,is_top_selling,is_new_arrival,tax_class_id,estimated_delivery_days,p.actual_price, p.sap_sku_code
+                                attributes::text as attributes,is_top_selling,is_new_arrival,tax_class_id,estimated_delivery_days,p.actual_price, p.sap_sku_code, p.discount_percentage
                             FROM tbl_products as p
                             INNER JOIN tbl_product_category as pc on pc.category_id=p.category_id
                             INNER JOIN tbl_product_sub_category as psc on psc.sub_category_id=p.sub_category_id
@@ -255,6 +255,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                     description = product.description,
                     base_price = product.base_price,
                     actual_price = product.actual_price,
+                    discount_percentage = product.discount_percentage,
                     category_id = product.category_id,
                     category_name = product.category_name,
                     sub_category_id = product.sub_category_id,
@@ -319,6 +320,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 pm.description = dto.description;
                 pm.base_price = dto.base_price;
                 pm.actual_price = dto.actual_price;
+                pm.discount_percentage = dto.discount_percentage ?? 0;
                 pm.category_id = dto.category_id;
                 pm.sub_category_id = dto.sub_category_id;
                 pm.manufacturer_id = dto.manufacturer_id;
@@ -403,7 +405,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 if (dto == null)
                     return ResponseEntity<object>.Error(null, "data is missing or invalid.");
 
-                var sql = new StringBuilder(@"SELECT product_code, p.name, p.sku, p.slug, p.description,actual_price, base_price, 
+                var sql = new StringBuilder(@"SELECT product_code, p.name, p.sku, p.slug, p.description,actual_price, base_price, p.discount_percentage,
                 p.category_id, p.sub_category_id, p.manufacturer_id,p.is_active, in_stock, stock_quantity,
                 p.is_top_selling, p.is_new_arrival,pc.name as category_name, psc.name as sub_category_name, m.name as manufacturer_name,
                 attributes::text as attributes,tax_class_id,estimated_delivery_days,p.sap_sku_code 
@@ -496,6 +498,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                         description = row.description,
                         base_price = row.base_price,
                         actual_price = row.actual_price,
+                        discount_percentage = row.discount_percentage,
                         category_id = row.category_id,
                         sub_category_id = row.sub_category_id,
                         manufacturer_id = row.manufacturer_id,
@@ -546,7 +549,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                 if (dto == null)
                     return ResponseEntity<object>.Error(null, "data is missing or invalid.");
 
-                var sql = new StringBuilder(@"SELECT product_code, p.name, p.sku, p.slug, p.description,actual_price,base_price,pc.name as category_name, psc.name as sub_category_name,
+                var sql = new StringBuilder(@"SELECT product_code, p.name, p.sku, p.slug, p.description,actual_price,base_price,p.discount_percentage,pc.name as category_name, psc.name as sub_category_name,
                 m.name as manufacturer_name,  tc.class_name as tax_class_name ,
                 p.category_id, p.sub_category_id, p.manufacturer_id,p.is_active, in_stock, stock_quantity,
                 p.is_top_selling, p.is_new_arrival, tax_class_id, estimated_delivery_days
@@ -626,7 +629,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
         {
             try
             {
-                string sql = @"SELECT product_code, name, sku, sap_sku_code, slug, description,actual_price,base_price, category_id, sub_category_id, manufacturer_id,is_active, in_stock, stock_quantity,
+                string sql = @"SELECT product_code, name, sku, sap_sku_code, slug, description,actual_price,base_price, discount_percentage, category_id, sub_category_id, manufacturer_id,is_active, in_stock, stock_quantity,
                                 is_top_selling, is_new_arrival,tax_class_id FROM tbl_products WHERE is_top_selling = true and is_active = true";
 
                 var topSellingProducts = (await _productRepository.QueryDynamicAsync(sql)).ToList();
@@ -660,6 +663,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                         description = x.description,
                         base_price = x.base_price,
                         actual_price = x.actual_price,
+                        discount_percentage = x.discount_percentage,
                         category_id = x.category_id,
                         sub_category_id = x.sub_category_id,
                         manufacturer_id = x.manufacturer_id,
@@ -696,7 +700,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
         {
             try
             {
-                string sql = @"SELECT product_code, name, sku, sap_sku_code, slug, description, actual_price, base_price, category_id, sub_category_id, manufacturer_id,is_active, in_stock, stock_quantity,
+                string sql = @"SELECT product_code, name, sku, sap_sku_code, slug, description, actual_price, base_price, discount_percentage, category_id, sub_category_id, manufacturer_id,is_active, in_stock, stock_quantity,
                                 is_top_selling, is_new_arrival,tax_class_id FROM tbl_products WHERE is_new_arrival = true and is_active = true";
 
                 var newArrivalProducts = (await _productRepository.QueryDynamicAsync(sql)).ToList();
@@ -729,6 +733,7 @@ namespace DUSTER.EComm.Services.Modules.Catelog
                         description = x.description,
                         base_price = x.base_price,
                         actual_price = x.actual_price,
+                        discount_percentage = x.discount_percentage,
                         category_id = x.category_id,
                         sub_category_id = x.sub_category_id,
                         manufacturer_id = x.manufacturer_id,
